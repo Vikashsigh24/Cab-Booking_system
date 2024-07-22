@@ -1,0 +1,33 @@
+1. Database Schema 'bookings'
+
+CREATE TABLE `bookings` (
+  `booking_id` int NOT NULL AUTO_INCREMENT,
+  `pickup_address` varchar(100) NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `time` varchar(100) NOT NULL,
+  `dropoff_address` varchar(100) NOT NULL,
+  `user_id` varchar(45) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `driver_name` varchar(45) NOT NULL,
+  `driver_phone` varchar(45) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  PRIMARY KEY (`booking_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+2. Database Schema 'registeration'
+   CREATE TABLE `registration` (
+  `sno` int NOT NULL AUTO_INCREMENT,
+  `fname` varchar(45) NOT NULL,
+  `lname` varchar(45) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `repassword` varchar(100) NOT NULL,
+  `mobile` varchar(45) NOT NULL,
+  `date_of_birth` date NOT NULL,
+  `license` varchar(45) NOT NULL,
+  `gender` varchar(45) NOT NULL,
+  PRIMARY KEY (`sno`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `mobile_UNIQUE` (`mobile`)
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ 
