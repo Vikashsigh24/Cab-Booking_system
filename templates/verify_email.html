@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+
+    
+
+    <div class="center">
+        <div class="column">
+            <div class="card">
+                <div class="search-box">
+    
+                    {% for msg in get_flashed_messages() %}
+    
+                    <h3 class="message">{{msg}}</h3>
+                    
+                    {% endfor %}
+    
+                    <form action="/verify_email" method="post">
+                        <input type="number" placeholder="Enter OTP" name="otp">
+                        <button type="submit">Verify</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

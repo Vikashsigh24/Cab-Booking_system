@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="{{url_for('home')}}">Home</a>
+        <a href="{{url_for('flight')}}">Flight</a>
+        <a href="{{url_for('train')}}">Train</a>
+        <a href="{{url_for('hotels')}}">Hotels</a>
+        <a href="{{url_for('homestays')}}">Homestays</a>
+        <a href="{{url_for('buses')}}">Buses</a>
+        <a href="{{url_for('cabs')}}">Cabs</a>
+
+        {% if session.get('email')%}
+        <div class="right-nav">
+            <a href="{{url_for('logout')}}">Logout</a>
+        </div>
+        {% else %}
+        <div class="right-nav">
+            <a href="{{url_for('login')}}">Login</a>
+        </div>
+        {% endif %}
+    </nav>
+
+    <div class="column search-box bg size-25">
+        <div class="user-data">
+            <h1 class="message" style="background-color: yellow;">Hello  Admin</h1>
+            <h4>9880202115</h4>
+            <h4>Admin</h4>
+        </div>
+        <a href="{{url_for('bookings')}}"><button style="margin: 5px;">Bookings</button></a>
+        <a href="{{url_for('users')}}"><button style="margin: 5px;">Users</button></a>
+        <a href="{{url_for('staffs')}}"><button style="margin: 5px;">Staffs</button></a>
+        <div class="message" style="background-color: yellow;">
+            <h4>Total Staffs: {{staffs}}</h4>
+            <h4>Total Bookings: {{bookings}}</h4>
+            <h4>Total Users: {{users}}</h4>
+    </div>
+    </div>
+
+
+    <div class="column size-70">
+        {% for msg in get_flashed_messages() %}
+        <h4 class="message">{{ msg }}</h4>
+        
+        {% endfor %}
+        <h1 class="message" style="margin-bottom: 10px;">Welcome to Admin page</h1>
+        <h1 class="message" style="margin-bottom: 10px;">Select to show data!</h1>
+    </div>
+        
+</body>
+
+</html>

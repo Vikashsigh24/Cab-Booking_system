@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
+</head>
+
+<body>
+    <!--<h1>Dashboard</h1>
+    <p><b>Name: </b>{{user.fname}} {{user.lname}}<br></p>
+    <p><b>Email: </b>{{user.email}}<br></p>
+    <p></p><b>Password: </b>{{user.password}}<br></p>-->
+
+    <nav>
+        <a href="{{url_for('home')}}">Home</a>
+        <a href="{{url_for('flight')}}">Flight</a>
+        <a href="{{url_for('train')}}">Train</a>
+        <a href="{{url_for('hotels')}}">Hotels</a>
+        <a href="{{url_for('homestays')}}">Homestays</a>
+        <a href="{{url_for('buses')}}">Buses</a>
+        <a href="{{url_for('cabs')}}">Cabs</a>
+
+        <div class="right-nav">
+            <a href="{{url_for('logout')}}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="column search-box bg size-25">
+        <div class="user-data">
+            <h1 class="message" style="background-color: yellow;">{{user.fname}} {{user.lname}}</h1>
+            <h4>{{user.mobile}}</h4>
+            <h4>{{user.license}}</h4>
+            <h4>{{user.email}}</h4>
+        </div>
+
+        <form action="/dashboard" method="POST">
+            <input style="margin: 5px;" value="{{pickup_address}}" type="text" placeholder="Pickup Address" name="pickup_address" required>
+            <input style="margin: 5px;" value="{{date}}" type="text" onfocus="(this.type='date')" placeholder="Pickup Date" name="pickup_date" required>
+            <input style="margin: 5px;" value="{{time}}" type="text" onfocus="(this.type='time')" placeholder="Pickup Time" name="pickup_time" required>
+            <input style="margin: 5px;" value="{{dropoff_address}}" type="text" placeholder="Dropoff Address" name="dropoff_address" required>
+
+            <button type="submit" style="margin: 10px;" type="submit">Book</button>
+            
+            <button type="reset" style="margin: 10px;">Clear</button>
+        </form>
+    </div>
+    <div class="column size-70">
+        {% for msg in get_flashed_messages() %}
+
+        <h4 class="message">{{msg}}</h4>
+
+        {% endfor %}
+        <table>
+            <thead>
+                <tr class="t-row">
+                    <th>Booking Id</th>
+                    <th>Pick Up Date</th>
+                    <th>Pick Up Time</th>
+                    <th>Pick Up Address</th>
+                    <th>Drop Off Address</th>
+                    <th>Driver Name</th>
+                    <th>Driver Phone</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="t-data">
+                {% for booking in bookings %}
+                <tr>
+                    <td class="t-row">{{ booking.booking_id}}</td>
+                    <td><b>{{ booking.date}}</b></td>
+                    <td><b>{{ booking.time}}</b></td>
+                    <td><b>{{ booking.pickup_address}}</b></td>
+                    <td><b>{{ booking.dropoff_address}}</b></td>
+                    <td><b>{{ booking.driver_name}}</b></td>
+                    <td><b>{{ booking.driver_phone}}</b></td>
+                    <td class="{% if booking.status == 'Booking Confirmed' %}confirmed{% else %}pending{% endif %}"><b>{{ booking.status}}</b></td>
+                    <td>
+                        <a href="/editform/{{booking.booking_id}}"><Button>Edit</Button></a>
+                        <form method="POST" action="{{ url_for('delete_booking', booking_id=booking.booking_id) }}">
+                            <button type="submit">Delete/Cancel</button>
+                        </form>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+</body>
+
+</html>

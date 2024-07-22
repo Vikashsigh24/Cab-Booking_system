@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Form</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
+</head>
+
+<body>
+   
+    <nav>
+        <a href="{{url_for('home')}}">Home</a>
+        <a href="{{url_for('flight')}}">Flight</a>
+        <a href="{{url_for('train')}}">Train</a>
+        <a href="{{url_for('hotels')}}">Hotels</a>
+        <a href="{{url_for('homestays')}}">Homestays</a>
+        <a href="{{url_for('buses')}}">Buses</a>
+        <a href="{{url_for('login')}}">Cabs</a>
+
+        <div class="right-nav">
+            <a href="{{url_for('logout')}}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="center">
+        <div class="column search-box size-25">
+            <form action="/update/{{bookings.booking_id}}" method="POST">
+                <input style="margin: 5px;" type="text" value="{{ bookings.pickup_address}}" placeholder="Pickup Address" name="pickup_address" required>
+                <input style="margin: 5px;" type="date" value="{{ bookings.date}}" placeholder="Pickup Date" name="pickup_date" required>
+                <input style="margin: 5px;" type="time" value="{{ bookings.time}}" placeholder="Pickup Time" name="pickup_time" required>
+                <input style="margin: 5px;" type="text" value="{{ bookings.dropoff_address}}" placeholder="Dropoff Address" name="dropoff_address" required>
+                <button style="margin: 10px;">Update</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

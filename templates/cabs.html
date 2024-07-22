@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabs</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="{{url_for('home')}}">Home</a>
+        <a href="{{url_for('flight')}}">Flight</a>
+        <a href="{{url_for('train')}}">Train</a>
+        <a href="{{url_for('hotels')}}">Hotels</a>
+        <a href="{{url_for('homestays')}}">Homestays</a>
+        <a href="{{url_for('buses')}}">Buses</a>
+        <a href="{{url_for('cabs')}}">Cabs</a>
+
+        {% if session.get('email')%}
+        <a href="{{url_for('dashboard')}}">Dashboard</a>
+
+        <div class="right-nav">
+            <a href="{{url_for('admin')}}">Admin</a>
+            <a href="{{url_for('logout')}}">Logout</a>
+        </div>
+        {% else %}
+        <div class="right-nav">
+            <a href="{{url_for('login')}}">Login</a>
+        </div>
+        {% endif %}
+    </nav>
+
+    
+    <div class="container">
+
+        <div class="row">
+            <div class="column-1">
+               
+                <form action="cabs" method="POST">
+                    <div class="column-4">
+                        <input type="text" name="from" placeholder="From">
+                    </div>
+                    <div class="column-4">
+                        <input type="text" name="to" placeholder="To">
+                    </div>
+                    <div class="column-4">
+                        <input type="date" name="date" placeholder="Enter Date">
+                    </div>
+                    <div class="column-4">
+                        <input type="text" name="class" placeholder="Travel Class">
+                    </div>
+                    <button type="submit">Search</button>
+
+
+                </form>
+
+                {% if weather %}
+                <p>Temperature: {{ weather }} °C</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

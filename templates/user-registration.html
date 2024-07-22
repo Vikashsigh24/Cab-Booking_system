@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registeration</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+    <nav>
+        <a href="{{url_for('home')}}">Home</a>
+        <a href="{{url_for('flight')}}">Flight</a>
+        <a href="{{url_for('train')}}">Train</a>
+        <a href="{{url_for('hotels')}}">Hotels</a>
+        <a href="{{url_for('homestays')}}">Homestays</a>
+        <a href="{{url_for('buses')}}">Buses</a>
+        <a href="{{url_for('cabs')}}">Cabs</a>
+
+        {% if session.get('email')%}
+        <div class="right-nav">
+            <a href="{{url_for('logout')}}">Logout</a>
+        </div>
+        {% else %}
+        <div class="right-nav">
+            <a href="{{url_for('login')}}">Login</a>
+        </div>
+        {% endif %}
+    </nav>
+
+    <div class="center">
+        <div class="column">
+            <div class="card">
+                <div class="search-box">
+    
+                    {% for msg in get_flashed_messages() %}
+                        <b class="message">{{msg}}</b>
+                    {% endfor %}
+    
+                    <form action="/user-registration" method="POST">
+                        <input type="text" value="{{fname}}" placeholder="First Name" name="fname" required>
+                        <input type="text" value="{{lname}}" placeholder="Last Name" name="lname" required>
+                        <input type="text" onfocus="(type='date')" value="{{date_of_birth}}"name="dob" value="date" placeholder="Date of birth" required>
+                        <input type="email" value="{{email}}"placeholder="Email" name="email" required>
+                        <input type="password" value="{{password}}"placeholder="Password" name="password" required>
+                        <input type="password" value="{{repassword}}"placeholder="Confirm Password" name="repassword" required>
+                        <input type="number" value="{{license}}"placeholder="License Number" name="license" disabled>
+                        <input type="number" value="{{mobile}}"placeholder="Mobile Number" name="mobile" required>
+                        <div class="radio">
+                            <label>Gender:</label>&nbsp;&nbsp;&nbsp;
+                            <label for="rd1">Male: </label>
+                            <input type="radio" name="gender" id="rd1" value="Male" class="radio">
+                            <label for="rd2">Female: </label>
+    
+                            <input type="radio" name="gender" id="rd2" value="Female" class="radio">
+                        </div><br>
+                        <button type="submit">Register</button>
+                        <p>If Registered<a href="{{url_for('login')}}"> Login Here</a></p>
+                    </form>
+    
+                </div>
+    
+            </div>
+        </div>
+    
+    </div>
+
+
+</body>
+
+</html>

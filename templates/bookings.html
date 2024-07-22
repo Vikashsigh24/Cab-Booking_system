@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <title>Bookings</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="{{url_for('home')}}">Home</a>
+        <a href="{{url_for('flight')}}">Flight</a>
+        <a href="{{url_for('train')}}">Train</a>
+        <a href="{{url_for('hotels')}}">Hotels</a>
+        <a href="{{url_for('homestays')}}">Homestays</a>
+        <a href="{{url_for('buses')}}">Buses</a>
+        <a href="{{url_for('cabs')}}">Cabs</a>
+
+        {% if session.get('email')%}
+        <div class="right-nav">
+            <a href="{{url_for('admin')}}">Admin</a>
+            <a href="{{url_for('logout')}}">Logout</a>
+        </div>
+        {% else %}
+        <div class="right-nav">
+            <a href="{{url_for('login')}}">Login</a>
+        </div>
+        {% endif %}
+    </nav>
+
+    <div class="column search-box size-25 bg">
+        <div class="user-data">
+            <h1 class="message" style="background-color: yellow;">Hello  Admin</h1>
+            <h4>9880202115</h4>
+            <h4>Admin</h4>
+        </div>
+        <a href="{{url_for('bookings')}}"><button style="margin: 5px;">Bookings</button></a>
+        <a href="{{url_for('users')}}"><button style="margin: 5px;">Users</button></a>
+        <a href="{{url_for('staffs')}}"><button style="margin: 5px;">Staffs</button></a>
+    </div>
+
+
+    <div class="column" style="width:73%;">
+        {% for msg in get_flashed_messages() %}
+        <b class="message">{{msg}}</b>
+        {% endfor %}
+        <table>
+            <thead>
+                <tr class="t-row">
+                    <th>Booking Id</th>
+                    <th>Pick Up Date</th>
+                    <th>Pick Up Time</th>
+                    <th>Pick Up Address</th>
+                    <th>Drop Off Address</th>
+                    <th>Driver Name</th>
+                    <th>Driver Phone</th>
+                    <th>Requested At</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="t-data">
+                {% for booking in bookings %}
+                <tr>
+                    <td style="background-color: yellow;"><b>{{ booking.booking_id }}</b></td>
+                    <td><b>{{ booking.date }}</b></td>
+                    <td><b>{{ booking.time }}</b></td>
+                    <td><b>{{ booking.pickup_address }}</b></td>
+                    <td><b>{{ booking.dropoff_address }}</b></td>
+
+                    <td>
+                        <form  class="option" action="{{url_for('assign_driver', booking_id=booking.booking_id)}}" , method="post">
+                            <select name="assign_driver">
+                                <option value="">Select Driver</option>
+                                {% for staff in staffs %}
+                                <option value="{{staff.fname}} {{staff.lname}}" {% if booking.driver_name==staff.fname
+                                    + " " + staff.lname %}selected{% endif %}><b>{{staff.fname}} {{staff.lname}}</b></option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit">Assign</button>
+
+                        </form>
+                    </td>
+                    {%if booking.driver_name != 'Select Driver' %}
+                    <td><b>{{booking.driver_phone}}</b></td>
+                    <td><b>{{booking.created_at}}</b></td>
+                    <td class="{% if booking.status == 'Booking Confirmed' %}confirmed{% else %}pending{% endif %}"><b>{{ booking.status }}</b></td>
+                    
+                    {% endif %}
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_booking', booking_id=booking.booking_id) }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+</body>
+
+</html>
